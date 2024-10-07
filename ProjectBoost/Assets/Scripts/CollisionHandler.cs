@@ -9,6 +9,8 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float fltNextLevelDelay = 1f;
     [SerializeField] AudioClip crashSFX;
     [SerializeField] AudioClip successSFX;
+    [SerializeField] ParticleSystem crashParticles;
+    [SerializeField] ParticleSystem successParticles;
 
     //Cashe references
     AudioSource audioSource;
@@ -45,8 +47,9 @@ public class CollisionHandler : MonoBehaviour
     {
         if (boolIsTransitioning) {return;}
 
-        audioSource.Stop();
         boolIsTransitioning = true;
+        audioSource.Stop();
+        PlayCrashParticles();
         GetComponent<Movement>().enabled = false; //Disable player movement ability
         PlayCrashSound();
         ReloadScene();
@@ -58,8 +61,9 @@ public class CollisionHandler : MonoBehaviour
     {
         if (boolIsTransitioning) {return;}
 
-        audioSource.Stop();
         boolIsTransitioning = true;
+        audioSource.Stop();
+        PlaySuccessParticles();
         GetComponent<Movement>().enabled = false; //Disable player movement ability
         PlaySuccessSound();
         LoadNextScene();
@@ -101,6 +105,16 @@ public class CollisionHandler : MonoBehaviour
     void PlaySuccessSound()
     {
         audioSource.PlayOneShot(successSFX);
+    }
+
+    void PlayCrashParticles()
+    {
+        crashParticles.Play();
+    }
+
+    void PlaySuccessParticles()
+    {
+        successParticles.Play();
     }
 
     //IEnumerator to wait to reload the current scene
