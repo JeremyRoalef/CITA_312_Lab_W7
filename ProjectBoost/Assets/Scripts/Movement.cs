@@ -34,12 +34,12 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetThrust(); //Get the input from the user
-        GetRotation(); // Get the input from the user
+        ThrustPlayer(); //Get the input from the user
+        RotatePlayer(); // Get the input from the user
     }
 
     //Method to determine if player should rotate
-    void GetRotation()
+    void RotatePlayer()
     {
         //If player is pressing both rotate buttons, don't rotate
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
@@ -72,7 +72,7 @@ public class Movement : MonoBehaviour
         //Freeze the physics rotation while rotating manually
         playerRb.freezeRotation = true;
 
-        //Rotate object around z-axis
+        //RotatePlayer object around z-axis
         Vector3 rotateAmount = Vector3.forward * rotateDirection * Time.deltaTime;
         transform.Rotate(rotateAmount);
 
@@ -81,29 +81,41 @@ public class Movement : MonoBehaviour
     }
 
     //Method to thrust the player
-    void GetThrust()
+    void ThrustPlayer()
     {
         if (Input.GetKey(KeyCode.Space)) //Set KeyCode enumeration type to Space
         {
-            //F = ma, meaning a = F/m. Acceleration of object from force is dependent on amount of force & object's mass
-
-            Vector3 forceAmount = Vector3.up * fltThrustSpeed * Time.deltaTime; //Vector3.up is the object's relative up direction
-            playerRb.AddRelativeForce(forceAmount); //Add force to rb relative to its own direction (not world space)
-
-            //Play the thrust sfx
-            PlayThrustSound();
-
-            //Play main thrust particles
-            PlayMainThrustParticles();
+            StartThrustingSequence();
         }
         else
         {
-            //Stop the thrust sfx
-            StopThrustSound();
-
-            //Stop main thrust particles
-            StopMainThrustParticles();
+            StopThrustingSequence();
         }
+    }
+
+    //Method to run when player starts thrusting
+    void StartThrustingSequence()
+    {
+        //F = ma, meaning a = F/m. Acceleration of object from force is dependent on amount of force & object's mass
+
+        Vector3 forceAmount = Vector3.up * fltThrustSpeed * Time.deltaTime; //Vector3.up is the object's relative up direction
+        playerRb.AddRelativeForce(forceAmount); //Add force to rb relative to its own direction (not world space)
+
+        //Play the thrust sfx
+        PlayThrustSound();
+
+        //Play main thrust particles
+        PlayMainThrustParticles();
+    }
+
+    //Method to run when player stops thrusting
+    void StopThrustingSequence()
+    {
+        //Stop the thrust sfx
+        StopThrustSound();
+
+        //Stop main thrust particles
+        StopMainThrustParticles();
     }
 
     //Method to turn the thrust sfx on
