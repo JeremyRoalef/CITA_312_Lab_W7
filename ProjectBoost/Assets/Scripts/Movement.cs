@@ -16,6 +16,9 @@ public class Movement : MonoBehaviour
     [SerializeField] float fltThrustSpeed = 1f;
     [SerializeField] float fltRotateSpeed = 1f;
     [SerializeField] AudioClip thrustSFX;
+    [SerializeField] ParticleSystem mainThrustParticles;
+    [SerializeField] ParticleSystem leftThrustParticles;
+    [SerializeField] ParticleSystem rightThrustParticles;
 
     //Create object types
     Rigidbody playerRb;
@@ -35,27 +38,35 @@ public class Movement : MonoBehaviour
         GetRotation(); // Get the input from the user
     }
 
-    //Method responsible for determining if player should rotate
+    //Method to determine if player should rotate
     void GetRotation()
     {
         //If player is pressing both rotate buttons, don't rotate
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
         {
-            Debug.Log("A and D button pressed (No rotation)");
+            PlayLeftThrustParticles();
+            PlayRightThrustParticles();
         }
         //Otherwise, if they're pressing the ccw rotation button, rotate ccw
         else if (Input.GetKey(KeyCode.A))
         {
             ApplyRotation(fltRotateSpeed);
+            PlayRightThrustParticles();
         }
         //Otherwise, if they're pressing the cw rotation button, rotate cw
         else if (Input.GetKey(KeyCode.D))
         {
             ApplyRotation(-fltRotateSpeed);
+            PlayLeftThrustParticles();
+        }
+        else
+        {
+            StopLeftThrustParticles();
+            StopRightThrustParticles();
         }
     }
 
-    //Method responsible for applying the rotation
+    //Method to apply the rotation
     void ApplyRotation(float rotateDirection)
     {
         //Freeze the physics rotation while rotating manually
@@ -69,7 +80,7 @@ public class Movement : MonoBehaviour
         playerRb.freezeRotation = false;
     }
 
-    //Method responsible for thrusting the player
+    //Method to thrust the player
     void GetThrust()
     {
         if (Input.GetKey(KeyCode.Space)) //Set KeyCode enumeration type to Space
@@ -81,15 +92,21 @@ public class Movement : MonoBehaviour
 
             //Play the thrust sfx
             PlayThrustSound();
+
+            //Play main thrust particles
+            PlayMainThrustParticles();
         }
         else
         {
             //Stop the thrust sfx
             StopThrustSound();
+
+            //Stop main thrust particles
+            StopMainThrustParticles();
         }
     }
 
-    //Method responsible for turning the thrust sfx on
+    //Method to turn the thrust sfx on
     void PlayThrustSound()
     {
         //If the thrust sfx is not playing, play the sfx
@@ -99,9 +116,55 @@ public class Movement : MonoBehaviour
         }
     }
     
-    //Method responsible for turning the thrust off
+    //Method to turn the thrust off
     void StopThrustSound()
     {
         audioSource.Stop();
+    }
+
+    //Method to play thrust particles
+    void PlayMainThrustParticles()
+    {
+        //Play thrust particles
+        if (!mainThrustParticles.isEmitting)
+        {
+            mainThrustParticles.Play();
+        }
+    }
+
+    //Method to stop thrust particles
+    void StopMainThrustParticles()
+    {
+        mainThrustParticles.Stop();
+    }
+
+    //Method to play left thrust particles
+    void PlayLeftThrustParticles()
+    {
+        if (!leftThrustParticles.isEmitting)
+        {
+            leftThrustParticles.Play();
+        }
+    }
+
+    //Method to stop left thrust particles
+    void StopLeftThrustParticles()
+    {
+        leftThrustParticles.Stop();
+    }
+
+    //Method to play right thrust particles
+    void PlayRightThrustParticles()
+    {
+        if (!rightThrustParticles.isEmitting)
+        {
+            rightThrustParticles.Play();
+        }
+    }
+
+    //Method to stop right thrust particles
+    void StopRightThrustParticles()
+    {
+        rightThrustParticles.Stop();
     }
 }
