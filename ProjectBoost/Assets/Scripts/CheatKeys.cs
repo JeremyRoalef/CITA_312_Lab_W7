@@ -25,7 +25,7 @@ public class CheatKeys : MonoBehaviour
     //Method to update collisions for player
     void UpdateCollisions()
     {
-        if (Input.GetKey(KeyCode.C) && boolCollisionEnables)
+        if (Input.GetKeyDown(KeyCode.C) && boolCollisionEnables)
         {
             playerCollider.enabled = false;
             boolCollisionEnables = false;
@@ -40,7 +40,7 @@ public class CheatKeys : MonoBehaviour
     //Method to load next level for player
     void LoadNextLevel()
     {
-        if (Input.GetKey(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             int intNextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 

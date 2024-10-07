@@ -774,7 +774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementVector: {x: 10, y: 0, z: 0}
-  movementFactor: 1
+  fltPeriod: 2
 --- !u!1001 &942942583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1051,10 +1051,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2856411120869426138, guid: 374f92bab61446f47ba3dadaba4079cb, type: 3}
-      propertyPath: m_Range
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 4607706957260817640, guid: 374f92bab61446f47ba3dadaba4079cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -42.75
@@ -1094,10 +1090,6 @@ PrefabInstance:
     - target: {fileID: 4607706957260817640, guid: 374f92bab61446f47ba3dadaba4079cb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5145941676699679175, guid: 374f92bab61446f47ba3dadaba4079cb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -28.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

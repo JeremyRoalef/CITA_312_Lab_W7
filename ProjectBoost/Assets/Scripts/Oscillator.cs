@@ -19,6 +19,8 @@ public class Oscillator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (fltPeriod <= Mathf.Epsilon) {return;}
+
         float fltCycles = Time.time / fltPeriod;
         const float fltTau = 2 * Mathf.PI; //tau = 6.28...
         float fltRawSineWave = Mathf.Sin(fltTau * fltCycles);
